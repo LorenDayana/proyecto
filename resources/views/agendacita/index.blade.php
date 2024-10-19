@@ -213,7 +213,7 @@
             confirmButtonText: 'Aceptar'
         }).then(() => {
             // Limpiar el formulario
-            document.getElementById('booking-form').reset(); // Limpia el formulario
+            document.getElementById('booking-form').reset(); // Limpia el formularios
             window.location.href = '{{ route("agendacita.index") }}'; // Redirige a la página de índice
         });
     })

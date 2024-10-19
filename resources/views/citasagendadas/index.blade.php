@@ -27,6 +27,8 @@
                             <th scope="col">Tipo servicio</th>
                             <th scope="col">Empleado</th>
                             <th scope="col">Fecha</th>
+                            <th scope="col">Acciones</th>
+                            <th scope="col"></th>
 
                         </tr>
                         </thead>

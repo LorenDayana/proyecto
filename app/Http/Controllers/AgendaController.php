@@ -100,6 +100,7 @@ class AgendaController extends Controller
         $agenda->delete();
         return to_route('citasagendadas.index');
     }
+    
     public function getOccupiedDates(Request $request)
 {
     $empleadoId = $request->input('empleado_id');
@@ -111,10 +112,10 @@ class AgendaController extends Controller
     $ocupadas = $citas->map(function ($cita) {
         return [
             'start' => $cita->fecha,
-            'end' => $cita->fecha, // Puedes ajustar el rango de horas si es necesario
+            'end' => $cita->fecha, // Ajusta el rango si es necesario
         ];
     });
-    
+
     return response()->json($ocupadas);
 }
 }
