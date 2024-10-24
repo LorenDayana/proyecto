@@ -102,20 +102,43 @@ class AgendaController extends Controller
     }
     
     public function getOccupiedDates(Request $request)
-{
-    $empleadoId = $request->input('empleado_id');
-    
-    // Obtener las citas ocupadas para el empleado seleccionado
-    $citas = Agenda::where('empleado_id', $empleadoId)->get(['fecha']);
-    
-    // Convertir las fechas a un formato que FullCalendar pueda utilizar
-    $ocupadas = $citas->map(function ($cita) {
-        return [
-            'start' => $cita->fecha,
-            'end' => $cita->fecha, // Ajusta el rango si es necesario
-        ];
-    });
+    {
+        $empleadoId = $request->input('empleado_id');
+        
+        // Obtener las citas ocupadas para el empleado seleccionado
+        $citas = Agenda::where('empleado_id', $empleadoId)->get(['fecha']);
+        
+        // Convertir las fechas a un formato que FullCalendar pueda utilizar
+        $ocupadas = $citas->map(function ($cita) {
+            return [
+                'start' => $cita->fecha,
+                'end' => $cita->fecha, // Ajusta el rango si es necesario
+            ];
+        });
 
-    return response()->json($ocupadas);
-}
+        return response()->json($ocupadas);
+    }
+
+    public function getCitasOcupadas(Request $request)
+    {
+        $empleadoId = $request->empleado_id;
+
+        // Obtener las citas para el empleado seleccionado
+        $citas = Agenda::where('empleado_id', $empleadoId)->get(['fecha']);
+
+        // Formatear las citas para FullCalendar
+        $events = $citas->map(function($cita) {
+            $fechaInicio = Carbon::parse($cita->fecha);
+            return [
+                'start' => $fechaInicio->toIso8601String(),  // Formato ISO 8601
+                'end' => $fechaInicio->addHour()->toIso8601String(),  // Suponiendo que la cita dura 1 hora
+                'title' => 'Ocupado',
+                'backgroundColor' => '#ff0000',  // Color de las citas ocupadas
+                'borderColor' => '#ff0000'
+            ];
+        });
+
+        return response()->json($events);
+    }
+
 }

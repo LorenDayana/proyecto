@@ -9,99 +9,104 @@
         </h2>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-xl mx-auto sm:px-4 lg:px-5">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-white">
-                    <div class="container">
-                        @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        @endif
-                        <form method="POST" action="{{ route('updatempleado.update', $empleado->id) }}">
-                            @method('PUT')
-                            @csrf
-                            <div class="space-y-4">
-
-                                <!-- Nombre del empleado -->
-                                <div class="flex flex-col">
-                                    <label for="nombres" class="font-semibold text-sm text-gray-700 dark:text-gray-300">Nombre empleado</label>
-                                    <input id="nombres" type="text" name="nombres" class="mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required value="{{ $empleado->nombres }}">
-                                </div>
-
-                                <!-- Apellido del empleado -->
-                                <div class="flex flex-col">
-                                    <label for="apellidos" class="font-semibold text-sm text-gray-700 dark:text-gray-300">Apellido empleado</label>
-                                    <input id="apellidos" type="text" name="apellidos" class="mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required value="{{ $empleado->apellidos }}">
-                                </div>
-
-                                <!-- Identificación -->
-                                <div class="flex flex-col">
-                                    <label for="identificacion" class="font-semibold text-sm text-gray-700 dark:text-gray-300">Identificación</label>
-                                    <input id="identificacion" type="text" name="identificacion" class="mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required value="{{ $empleado->identificacion }}">
-                                </div>
-
-                                <!-- Correo electrónico -->
-                                <div class="flex flex-col">
-                                    <label for="correo" class="font-semibold text-sm text-gray-700 dark:text-gray-300">Correo electrónico</label>
-                                    <input id="correo" type="email" name="correo" class="mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required value="{{ $empleado->correo }}">
-                                </div>
-
-                                <!-- Teléfono -->
-                                <div class="flex flex-col">
-                                    <label for="telefono" class="font-semibold text-sm text-gray-700 dark:text-gray-300">Teléfono</label>
-                                    <input id="telefono" type="tel" name="telefono" class="mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required value="{{ $empleado->telefono }}">
-                                </div>
-
-                                <!-- Dirección -->
-                                <div class="flex flex-col">
-                                    <label for="direccion" class="font-semibold text-sm text-gray-700 dark:text-gray-300">Dirección</label>
-                                    <input id="direccion" type="text" name="direccion" class="mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required value="{{ $empleado->direccion }}">
-                                </div>
-
-                                <!-- Tipo de contrato -->
-                                <div class="flex flex-col">
-                                    <label for="tipocontrato" class="font-semibold text-sm text-gray-700 dark:text-gray-300">Tipo de contrato</label>
-                                    <select id="tipocontrato" name="tipocontrato" class="mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-                                        <option value="full_time" {{ $empleado->tipocontrato == 'full_time' ? 'selected' : '' }}>Tiempo completo</option>
-                                        <option value="part_time" {{ $empleado->tipocontrato == 'part_time' ? 'selected' : '' }}>Medio tiempo</option>
-                                        <option value="temporary" {{ $empleado->tipocontrato == 'temporary' ? 'selected' : '' }}>Temporal</option>
-                                    </select>
-                                </div>
-
-                                <!-- Fecha disponible -->
-                                <div class="flex flex-col">
-                                    <label for="datesemana" class="font-semibold text-sm text-gray-700 dark:text-gray-300">Fecha disponible</label>
-                                    <input id="datesemana" type="datetime-local" name="datesemana" 
-                                        class="mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" 
-                                        required value="{{ $empleado->datesemana }}">
-                                </div>
-
-                                <!-- Contenedor para el calendario -->
-                                <div id='calendar-container' style="display: none; margin-top: 20px;">
-                                    <div id='calendar' style="max-width: 100%; border: 1px solid #ccc; background: white;"></div>
-                                </div>
-
-                                <!-- Botón de enviar -->
-                                <div class="flex flex-col mt-4">
-                                    <button type="submit" class="btn btn-primary">Actualizar Datos</button>
-                                </div>
-                            </div>
-                        </form>
+    <form method="POST" action="{{ route('updatempleado.update', $empleado->id) }}" id="booking-form">
+        @method('PUT')
+        @csrf
+        <div class="container mt-4 w-100">
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+            <div class="row w-100">
+                <div class="col-md-6"> <!-- Cambié de col-md-4 a col-md-6 para más ancho -->
+                    <div class="form-group">
+                        <label for="nombres" class="font-weight-bold">Nombre Empleado</label>
+                        <input type="text" name="nombres" id="nombres" class="form-control w-100" placeholder="Ingrese nombres" required value="{{ $empleado->nombres}}">
                     </div>
-
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="telefono" class="font-weight-bold">Apellido Empleado</label>
+                        <input type="text" name="apellidos" id="apellidos" class="form-control w-100" placeholder="Ingrese apellidos" required value="{{ $empleado->apellidos}}">
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+            
+            <div class="row w-100">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="identificacion" class="font-weight-bold">Identificación</label>
+                        <input type="number" name="identificacion" min="0" id="identificación" class="form-control w-100" placeholder="Ingrese su identificacion" value="{{ $empleado->identificacion }}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fecha-disponible" class="font-weight-bold">Correo electrónico</label>
+                        <input id="correo" name="correo" type="email" name="fecha" class="form-control w-100" required value="{{ $empleado->correo}}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fecha-disponible" class="font-weight-bold">Telefono</label>
+                        <input id="telefono" type="tel" name="telefono" class="form-control w-100" required value="{{ $empleado->telefono }}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fecha-disponible" class="font-weight-bold">Direccion</label>
+                        <input id="direccion" type="text" name="direccion" class="form-control w-100" required value="{{ $empleado->direccion }}">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row w-100">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="tipo-servicio" class="font-weight-bold">Tipo de contrato</label>
+                        <select id="tipocontrato" name="tipocontrato" class="font-weight-bold" required>
+                            <option value="full_time" {{ $empleado->tipocontrato == 'full_time' ? 'selected' : '' }}>Tiempo completo</option>
+                            <option value="part_time" {{ $empleado->tipocontrato == 'part_time' ? 'selected' : '' }}>Medio tiempo</option>
+                            <option value="temporary" {{ $empleado->tipocontrato == 'temporary' ? 'selected' : '' }}>Temporal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fecha-disponible" class="font-weight-bold">Fecha disponible</label>
+                        <input id="datesemana" type="datetime" name="datesemana" class="form-control w-100" required value="{{ $empleado->datesemana }}">
+                    </div>
+                </div>
+            </div>
 
+            <div class="row w-100">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="tipo-servicio" class="font-weight-bold">Nombre: </label>
+                        <label for="tipo-servicio" class="font-weight-bold">Manuel </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenedor del calendario -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div id="calendar" style="width: 100%; height: 600px;"></div> <!-- Ajuste de tamaño del calendario -->
+                </div>
+            </div>
+            
+            <!-- Botón de envío -->
+            <div class="flex flex-col mt-4">
+                <button type="submit" class="btn btn-primary"> Actualizar Datos </button>
+            </div>
+        </div>
+    </form>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
     const calendarEl = document.getElementById('calendar');
     const dateInput = document.getElementById('datesemana');
     const calendarContainer = document.getElementById('calendar-container');
@@ -114,123 +119,77 @@
     const horas = String(ahora.getHours()).padStart(2, '0');
     const minutos = String(ahora.getMinutes()).padStart(2, '0');
     const fechaMinima = `${anio}-${mes}-${dia}T${horas}:${minutos}`;
-    
+
     dateInput.setAttribute("min", fechaMinima); // Establece el valor mínimo del input
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth',
-    headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-    },
-    editable: true,
-    selectable: true,
-    dateClick: function(info) {
-        const selectedDate = info.date;
+        initialView: 'timeGridWeek',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        editable: true,
+        selectable: true,
+        timeZone: 'local', // Asegurarse de usar la zona horaria local
+        dateClick: function(info) {
+            const selectedDate = info.date;
 
-        // Verificar si la fecha seleccionada es válida (no puede ser anterior a ahora)
-        const ahora = new Date();
-        if (selectedDate < ahora) {
-            alert('No se puede seleccionar una fecha y hora anteriores a la actual.');
-            return;
+            // Verificar si la fecha seleccionada es válida (no puede ser anterior a ahora)
+            const ahora = new Date();
+            if (selectedDate < ahora) {
+                alert('No se puede seleccionar una fecha y hora anteriores a la actual.');
+                return;
+            }
+
+            const formattedDate = new Date(selectedDate.getTime() - selectedDate.getTimezoneOffset() * 60000).toISOString().slice(0, 16); // Ajusta la hora según la zona horaria
+            dateInput.value = formattedDate; // Actualiza el campo de entrada
+            calendarContainer.style.display = 'none'; // Oculta el calendario
+        },
+        slotMinTime: '06:00:00',  // Hora de inicio
+        slotMaxTime: '19:00:00',  // Hora de fin
+        slotDuration: '00:30:00',  // Duración de cada slot (30 minutos)
+        slotLabelInterval: '01:00',  // Intervalo de las etiquetas de hora
+        height: 'auto',  // Ajustar automáticamente la altura del calendario
+        contentHeight: 'auto',  // Ajustar la altura del contenido
+        eventMinHeight: 10,  // Altura mínima de los eventos
+        expandRows: true,  // Expandir las filas para llenar el espacio disponible
+        selectable: true,
+        editable: true,
+        select: function(selectionInfo) {
+            const startDate = selectionInfo.start;
+
+            // Verificar si la fecha seleccionada es válida (no puede ser anterior a ahora)
+            const ahora = new Date();
+            if (startDate < ahora) {
+                alert('No se puede seleccionar una fecha y hora anteriores a la actual.');
+                calendar.unselect(); // Desmarcar la selección si no es válida
+                return;
+            }
+
+            const formattedDate = new Date(startDate.getTime() - startDate.getTimezoneOffset() * 60000).toISOString().slice(0, 16); // Ajusta la hora según la zona horaria
+            dateInput.value = formattedDate; // Actualiza el campo de entrada
+            calendarContainer.style.display = 'none'; // Oculta el calendario
         }
-
-        const formattedDate = selectedDate.toISOString().slice(0, 16); // Formato: YYYY-MM-DDTHH:MM
-        dateInput.value = formattedDate; // Actualiza el campo de entrada
-        calendarContainer.style.display = 'none'; // Oculta el calendario
-    },
-    select: function(selectionInfo) {
-        const startDate = selectionInfo.start;
-
-        // Verificar si la fecha seleccionada es válida (no puede ser anterior a ahora)
-        const ahora = new Date();
-        if (startDate < ahora) {
-            alert('No se puede seleccionar una fecha y hora anteriores a la actual.');
-            calendar.unselect(); // Desmarcar la selección si no es válida
-            return;
-        }
-
-        const formattedDate = startDate.toISOString().slice(0, 16); // Formato: YYYY-MM-DDTHH:MM
-        dateInput.value = formattedDate; // Actualiza el campo de entrada
-        calendarContainer.style.display = 'none'; // Oculta el calendario
-    }
-});
-
-
-    dateInput.addEventListener('click', function() {
-        calendar.render(); // Asegúrate de que el calendario se renderice
-        calendarContainer.style.display = 'block'; // Muestra el calendario
     });
 
-    document.addEventListener('click', function(event) {
-        if (!calendarContainer.contains(event.target) && event.target !== dateInput) {
-            calendarContainer.style.display = 'none'; // Oculta el calendario al hacer clic fuera
-        }
-    });
+    // Renderiza y muestra el calendario automáticamente al cargar la página
+    calendar.render(); 
+    calendarContainer.style.display = 'block'; // Asegúrate de que el calendario sea visible
 });
 
     </script>
-
     <style>
-        /* Estilo adicional para el calendario */
-        #calendar {
-            border: 1px solid #ccc; /* Borde alrededor del calendario */
-            border-radius: 8px; /* Esquinas redondeadas */
-            overflow: hidden; /* Oculta contenido que sobresalga */
-            background: white; /* Fondo blanco */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        .fc-timegrid-slot {
+            height: 30px !important; /* Ajusta la altura de cada slot de tiempo */
         }
 
-        .fc {
-            font-family: 'Arial', sans-serif;
-            font-size: 0.9em; 
+        .fc-timegrid-axis {
+            padding: 0 !important; /* Elimina el relleno entre los slots */
         }
 
-        /* Cabecera del calendario */
-        .fc-toolbar {
-            background-color: #007bff; /* Fondo azul */
-            color: white; /* Texto blanco */
-            padding: 10px; /* Espaciado interno */
-            border-radius: 8px; /* Esquinas redondeadas */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra */
-        }
-
-        .fc-toolbar-title {
-            font-size: 1.5em; 
-            font-weight: bold; 
-        }
-
-        /* Estilo de los días del calendario */
-        .fc-daygrid-day {
-            border-radius: 60px;
-            transition: background-color 0.3s, transform 0.2s; 
-            padding: 5px; /* Espaciado interno */
-        }
-
-        .fc-daygrid-day:hover {
-            background-color: rgba(0, 123, 255, 0.2); /* Color azul claro al pasar el mouse */
-            transform: scale(1.05); /* Efecto de aumento */
-        }
-
-        /* Estilo de los días actuales y seleccionados */
-        .fc-daygrid-day.fc-day-today {
-            background-color: rgba(0, 123, 255, 0.4); /* Fondo azul claro para el día actual */
-            border: 2px solid #007bff; /* Borde azul */
-        }
-
-        .fc-button {
-            background-color: #28a745; /* Color verde para los botones */
-            color: white;
-            font-size: 0.9em; 
-            border: none;
-            border-radius: 5px; 
-            padding: 5px 10px; 
-        }
-
-        .fc-button:hover {
-            background-color: #218838; /* Color verde oscuro al pasar el mouse */
+        .fc-scrollgrid {
+            border: none !important; /* Elimina bordes entre los slots */
         }
     </style>
-    
 </x-app-layout>

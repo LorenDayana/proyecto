@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
     })->name('citasagendadas.index');
     //rutas para listar las citas
     Route::get('/citasagendadas',[AgendaController::class,'mostrarLista'])->name('citasagendadas.index');
+    // editar citas agendadas
+    Route::post('/agendacita/ocupadas', [AgendaController::class, 'getCitasOcupadas'])->name('agendacita.ocupadas');
     //ruta para editar los datos
     Route::get('/editcita/{id}',[AgendaController::class,'mostrarEditCita'])->name('editcita.index');
     //ruta para actualizar los datos
