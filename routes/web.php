@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/agendacita', [AgendaController::class,'store'])->name('agendacita.store');
     Route::get('/agendacita', [AgendaController::class,'show'])->name('agendacita.index');
     Route::post('/agendacita/ocupadas', [AgendaController::class, 'getOccupiedDates'])->name('agendacita.ocupadas');
+    // citas agendadas
     Route::get('/citasagendadas', function(){
         return view('citasagendadas.index');
     })->name('citasagendadas.index');
