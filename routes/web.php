@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\RolesController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -48,6 +50,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/editempleado/{id}',[EmpleadoController::class,'mostrarEdit'])->name('editempleado.index');
     Route::put('/updatempleado/{id}',[EmpleadoController::class,'update'])->name('updatempleado.update');
     Route::get('/deletempleado/{id}', [EmpleadoController::class,'destroy'])->name('deletempleado.destroy');
+
+ //ruta para viualizar los roles
+   
+    Route::get('/roles',[RolesController::class,'show'])->name('roles.index');
+    Route::put('/updateroles/{id}',[RolesController::class,'update'])->name('roles.update');
+  
+
 });
 
 require __DIR__.'/auth.php';

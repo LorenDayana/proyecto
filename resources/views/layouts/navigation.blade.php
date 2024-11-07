@@ -21,22 +21,30 @@
                     {{ __('Appointment Booking') }}
                     </x-nav-link>
                 </div>
+                @role('admin')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('empleado.index')" :active="request()->routeIs('empleado.index')">
                     {{ __('Employee') }}
                     </x-nav-link>
                 </div>
+                @endrole
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('citasagendadas.index')" :active="request()->routeIs('citasagendadas.index')">
                     {{ __('Appointment Setter') }}
                     </x-nav-link>
                 </div>
+                @role('admin')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('listaempleado.index')" :active="request()->routeIs('listaempleado.index')">
                     {{ __('Employee List') }}
                     </x-nav-link>
                 </div>
-            </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('roles.index')" :active="request()->routeIs('roles.index')">
+                        {{ __('Roles') }}
+                    </x-nav-link>
+                @endrole
+            
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -65,7 +73,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{__('Log Out') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -119,6 +127,11 @@
                 <x-responsive-nav-link :href="route('listaempleado.index')">
                     {{ __('Employee List') }}
                 </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('roles.index')">
+                    {{ __('Roles') }}
+                </x-responsive-nav-link>
+
 
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}

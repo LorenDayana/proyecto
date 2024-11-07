@@ -2,6 +2,7 @@
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/main.min.css' rel='stylesheet' />
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
+@role('admin')
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -193,3 +194,8 @@
         }
     </style>
 </x-app-layout>
+@else
+   <div class="alert alert-danger">
+     <strong>Acceso denegado</strong>No tienes permiso para acceder a esta seccion
+    </div>
+@endif
